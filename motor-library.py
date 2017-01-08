@@ -1,4 +1,5 @@
 import os
+import sys, termios, tty
 import RPi.GPIO as GPIO
 from time import sleep
 
@@ -51,3 +52,16 @@ def Turn(direction):
 	else:
 		# Raise direction invalid error
 		raise ValueError("Invalid Direction Specified", direction)
+
+#Used to read a single charicter (used for basic remote control)
+def GetCharicter():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return ch
+
