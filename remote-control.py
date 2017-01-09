@@ -1,7 +1,7 @@
 import motorlibrary as mc
 
 while True:
-	input = mc.GetCharicter()
+	input = mc.GetCharacter()
 
 	if input == "w":
 		MoveBy("f", 0.5)
