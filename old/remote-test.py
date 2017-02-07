@@ -8,26 +8,34 @@ time = raw_input("How long would you like the robot to run for /seconds : ")
 
 GPIO.setmode(GPIO.BCM)
 
-ForwardPin = 9
-BackwardPin = 10
+ForwardPinA = 23
+BackwardPinA = 24
+ForwardPinB = 10
+BackwardPinB = 9
 
 # Setup the GPIO pins ready for control
-GPIO.setup(ForwardPin,GPIO.OUT)
-GPIO.setup(BackwardPin,GPIO.OUT)
+GPIO.setup(ForwardPinA,GPIO.OUT)
+GPIO.setup(BackwardPinA,GPIO.OUT)
+GPIO.setup(ForwardPinB,GPIO.OUT)
+GPIO.setup(BackwardPinB,GPIO.OUT)
 
 print "Turning motor on"
 
 if direction == "f":
-	GPIO.output(ForwardPin, GPIO.HIGH)
+	GPIO.output(ForwardPinA, GPIO.HIGH)
+	GPIO.output(ForwardPinB, GPIO.HIGH)
 else:
-	GPIO.output(BackwardPin, GPIO.HIGH)
+	GPIO.output(BackwardPinA, GPIO.HIGH)
+	GPIO.output(BackwardPinB, GPIO.HIGH)
 
 sleep(float(time))
 
 print "Stopping motor"
 # Set all GPIO pins to low to kill any movement
-GPIO.output(ForwardPin, GPIO.LOW)
-GPIO.output(BackwardPin, GPIO.LOW)
+GPIO.output(ForwardPinA, GPIO.LOW)
+GPIO.output(BackwardPinA, GPIO.LOW)
+GPIO.output(ForwardPinB, GPIO.LOW)
+GPIO.output(BackwardPinB, GPIO.LOW)
 
 # Release hold on GPIO pins
 GPIO.cleanup()

@@ -53,8 +53,8 @@ def Turn(direction):
 		# Raise direction invalid error
 		raise ValueError("Invalid Direction Specified", direction)
 
-#Used to read a single character (used for basic remote control)
-def GetCharacter():
+#Used to read a single charicter (used for basic remote control)
+def GetCharicter():
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
     try:

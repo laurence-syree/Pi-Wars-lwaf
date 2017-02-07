@@ -1,17 +1,17 @@
 import motorlibrary as mc
 
 while True:
-	input = mc.GetCharacter()
+	input = mc.GetCharicter()
 
 	if input == "w":
-		MoveBy("f", 0.5)
+		mc.MoveBy("f", 0.5)
 	elif input == "s":
-		MoveBy("b", 0.5)
+		mc.MoveBy("b", 0.5)
 	elif input == "a":
-		Turn("l")
+		mc.Turn("l")
 	elif input == "d":
-		Turn("r")
+		mc.Turn("r")
 	elif input == " ":
-		Turn("s")
+		mc.Turn("s")
 	elif input == "e":
 		break
