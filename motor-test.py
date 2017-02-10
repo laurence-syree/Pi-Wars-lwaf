@@ -5,14 +5,14 @@ direction = "l"
 distance = 4
 
 pins = {
-	"frf" : 31,
-	"frb" : 29,
+	"frf" : 33,
+	"frb" : 22,
 	"flf" : 35,
-	"flb" : 33,
-	"brf" : 15,
-	"brb" : 13,
-	"blf" : 16,
-	"blb" : 18
+	"flb" : 37,
+	"brf" : 32,
+	"brb" : 36,
+	"blf" : 38,
+	"blb" : 40
 }
 
 GPIO.setmode(GPIO.BOARD)
