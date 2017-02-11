@@ -4,12 +4,7 @@ from time import sleep
 direction = ""
 while direction != "exit":
 	direction = raw_input("Please enter the direction: ")
-	distance = raw_input("Please enter the distance: ")
 	speed = float(raw_input("Please enter the speed (25-90): "))
-
-	# direction = "r"
-	# distance = 0.9
-	# speed = 90
 
 	pins = {
 		"frf" : 33,
@@ -26,6 +21,7 @@ while direction != "exit":
 		"l" : 18,
 		"r" : 16
 	}
+
 
 
 	GPIO.setmode(GPIO.BOARD)
