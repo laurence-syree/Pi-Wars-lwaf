@@ -1,3 +1,6 @@
+""" Script to pull information from a controller and pass on motor control information """
+# Next line is for the sublime pylinter plugin
+# pylint: disable = I0011, C0103, R0201, C0330, C0103
 import pygame
 
 def clamp(my_value, min_value, max_value):
@@ -9,7 +12,7 @@ pygame.joystick.init()
 controller = pygame.joystick.Joystick(0)
 controller.init()
 
-screen = pygame.display.set_mode((100,100))
+screen = pygame.display.set_mode((100, 100))
 
 
 axis = {}
@@ -28,46 +31,38 @@ trigger = 0
 
     # main loop
 while True:
-
     for event in pygame.event.get():
-
         if event.type == pygame.JOYBUTTONDOWN:
-                button[event.button] = True
-               
-                if(event.button == 7):
-                        # print(event.button)
-                        triggerDown = True
+            button[event.button] = True
+
+        if event.button == 7:
+            # print(event.button)
+            triggerDown = True
 
         if event.type == pygame.JOYBUTTONUP:
-            if(event.button == 7):
+            if event.button == 7:
                 triggerDown = False
 
         if event.type == pygame.JOYAXISMOTION:
-                if event.axis == 0:
-                        headingX = event.value
+            if event.axis == 0:
+                headingX = event.value
 
-                if event.axis == 4:
-                        
-                        scale = (event.value + 1) / 2
-                        trigger = scale
+        if event.axis == 4:
+            scale = (event.value + 1) / 2
+            trigger = scale
 
-    if triggerDown:
-        #print(headingX)
-        #print(trigger)
+        if triggerDown:
+            #print(headingX)
+            #print(trigger)
 
-        leftValue = trigger - headingX
-        rightValue = trigger + headingX
+            leftValue = trigger - headingX
+            rightValue = trigger + headingX
 
-        leftValue = clamp(leftValue, -1, 1)
-        rightValue = clamp(rightValue, -1, 1)
+            leftValue = clamp(leftValue, -1, 1)
+            rightValue = clamp(rightValue, -1, 1)
 
-        leftValue = round(leftValue, 4)
-        rightValue = round(rightValue, 4)
+            leftValue = round(leftValue, 4)
+            rightValue = round(rightValue, 4)
 
-        print(leftValue)
-        print(rightValue)
-
-
-
-
-
+            print(leftValue)
+            print(rightValue)
