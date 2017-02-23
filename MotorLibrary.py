@@ -4,9 +4,15 @@
 # Import the GPIO library so we can control the GPIO pins
 import RPi.GPIO as GPIO
 
+SPEED = 0
+DIRECTION = 1
+
+
 
 def normspeed(input_data):
     """ Normalises an input range value to the range required by the motors (direcitonally) """
+    if input_data == 0:
+        return 0, None
     back = False
     abs_input_data = abs(input_data)
     OldRange = (1 - 0)
@@ -28,7 +34,7 @@ class Management():
         # Set the GPIO output method for the script (currently: pin number based assignment)
         GPIO.setmode(GPIO.BOARD)
         # Set the motor GPIO pins to output
-        for cur_pin in self.pinset.items()[1]:
+        for cur_key, cur_pin in self.pinset.items():
             GPIO.setup(cur_pin, GPIO.OUT)
 
         # Start PWM for the right side of the robot
@@ -44,38 +50,48 @@ class Management():
         self.pwm2.start(90)
 
     def move(self, speedLeft, speedRight):
+        self.stop()
         """ converts a range of 1 to -1 to motor speeds using normspeed then sets motors """
         # Convert the input range 1 to -1 into 90 to 35 motor controllable range using normspeed
-        speedleft = normspeed(speedLeft)
-        speedright = normspeed(speedRight)
+        normLeft = normspeed(speedLeft)
+        normRight = normspeed(speedRight)
+
 
         # Change the duty cycles on both motors according to what has been requested
-        self.pwm1.ChangeDutyCycle(speedleft[0])
-        self.pwm2.ChangeDutyCycle(speedright[0])
+        if normLeft[SPEED] != 0:
+            self.pwm1.ChangeDutyCycle(normLeft[SPEED])
+        if normRight[SPEED] != 0:
+            self.pwm2.ChangeDutyCycle(normRight[SPEED])
 
         # Itterate through each pin in the pinset dictionary
         for cur_key, cur_pin in self.pinset.items():
-            # Depending on the key for the pin turn it on, used for turning on the spot or reversing
-            if speedleft[1]:
-                # If the pin currently in operation is a forwards pin enable
-                if cur_key.endswith('f'):
-                    GPIO.output(cur_pin, GPIO.HIGH)
-            elif not speedleft[1]:
-                # If the user has given a reverse command, enable the backwards pins
-                if cur_key.endswith('b'):
-                    GPIO.output(cur_pin, GPIO.HIGH)
+            if normLeft[SPEED] != 0:
+                if cur_key[1] == 'l':
+                    # print "lefting"
+                    # Depending on the key for the pin turn it on, used for turning on the spot or reversing
+                    if normLeft[DIRECTION]:
+                        # If the pin currently in operation is a forwards pin enable
+                        if cur_key.endswith('f'):
+                            GPIO.output(cur_pin, GPIO.HIGH)
+                    elif not normLeft[DIRECTION]:
+                        # If the user has given a reverse command, enable the backwards pins
+                        if cur_key.endswith('b'):
+                            GPIO.output(cur_pin, GPIO.HIGH)
 
-            # Do the same for the right side of the robot
-            if speedright[1]:
-                if cur_key.endswith('f'):
-                    GPIO.output(cur_pin, GPIO.HIGH)
-            elif not speedright[1]:
-                if cur_key.endswith('b'):
-                    GPIO.output(cur_pin, GPIO.HIGH)
+            if normRight[SPEED] != 0:
+                if cur_key[1] == 'r':
+                    # print "righting"
+                    # Do the same for the right side of the robot
+                    if normRight[DIRECTION]:
+                        if cur_key.endswith('f'):
+                            GPIO.output(cur_pin, GPIO.HIGH)
+                    elif not normRight[DIRECTION]:
+                        if cur_key.endswith('b'):
+                            GPIO.output(cur_pin, GPIO.HIGH)
 
     def stop(self):
         """ Set all GPIO pins to low to kill any movement """
-        for cur_pin in self.pinset.items()[1]:
+        for cur_key, cur_pin in self.pinset.items():
             GPIO.output(cur_pin, GPIO.LOW)
 
     def cleanup(self):
