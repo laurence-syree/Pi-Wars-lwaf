@@ -9,18 +9,21 @@ DIRECTION = 1
 
 
 
+# def normspeed(input_data):
+#     """ Normalises an input range value to the range required by the motors (direcitonally) """
+#     if input_data == 0:
+#         return 0, None
+#     back = False
+#     abs_input_data = abs(input_data)
+#     OldRange = (1 - 0)
+#     NewRange = (90 - 10)
+#     NewValue = (((abs_input_data - 0) * NewRange) / OldRange) + 10
+#     if input_data < 0:
+#         back = True
+#     return NewValue, back
+
 def normspeed(input_data):
-    """ Normalises an input range value to the range required by the motors (direcitonally) """
-    if input_data == 0:
-        return 0, None
-    back = False
-    abs_input_data = abs(input_data)
-    OldRange = (1 - 0)
-    NewRange = (90 - 35)
-    NewValue = (((abs_input_data - 0) * NewRange) / OldRange) + 35
-    if input_data < 0:
-        back = True
-    return NewValue, back
+    return abs(input_data)*80 + 35, input_data < 0
 
 # Create a central class called managment
 class Management():
@@ -59,8 +62,10 @@ class Management():
 
         # Change the duty cycles on both motors according to what has been requested
         if normLeft[SPEED] != 0:
+            print normLeft[SPEED]
             self.pwm1.ChangeDutyCycle(normLeft[SPEED])
         if normRight[SPEED] != 0:
+            print normRight[SPEED]
             self.pwm2.ChangeDutyCycle(normRight[SPEED])
 
         # Itterate through each pin in the pinset dictionary

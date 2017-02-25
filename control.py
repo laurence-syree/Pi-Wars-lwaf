@@ -4,6 +4,7 @@
 import time
 import MotorLibrary
 import LineSenseLib
+import progressbar
 
 # System setup
 PINS = {
@@ -30,9 +31,8 @@ PWMS = {
 MOTORS = MotorLibrary.Management(PINS, PWMS)
 
 motion = {
-	"left" : 0.4,
-	"right" : 0.4,
-	"delay" : 0.2
+	"left" : 0.2,
+	"right" : 0.2
 }
 
 
@@ -42,46 +42,55 @@ while True:
 	if LineSenseLib.checkSensor(linePins['c']) and not LineSenseLib.checkSensor(linePins['l']) and LineSenseLib.checkSensor(linePins['r']):
 		motion = {
 			"left" : 0.4,
-			"right" : 0,
-			"delay" : 0.3
+			"right" : -0.4
 		}
 		print "1"
 	elif LineSenseLib.checkSensor(linePins['c']) and LineSenseLib.checkSensor(linePins['l']) and not LineSenseLib.checkSensor(linePins['r']):
 		motion = {
-			"left" : 0,
-			"right" : 0.4,
-			"delay" : 0.3
+			"left" : -0.4,
+			"right" : 0.4
 		}
 		print "2"
 	elif LineSenseLib.checkSensor(linePins['c']) and not LineSenseLib.checkSensor(linePins['l']) and not LineSenseLib.checkSensor(linePins['r']):
 		motion = {
-			"left" : 0.1,
-			"right" : 0.1,
-			"delay" : 0
+			"left" : 0.05,
+			"right" : 0.05
 		}
 		print "3"
 	elif not LineSenseLib.checkSensor(linePins['c']) and LineSenseLib.checkSensor(linePins['l']) and not LineSenseLib.checkSensor(linePins['r']):
 		motion = {
-			"left" : 0,
-			"right" : 0.5,
-			"delay" : 0.3
+			"left" : -0.5,
+			"right" : 0.5
 		}
 		print "4"
 	elif not LineSenseLib.checkSensor(linePins['c']) and not LineSenseLib.checkSensor(linePins['l']) and LineSenseLib.checkSensor(linePins['r']):
 		motion = {
 			"left" : 0.5,
-			"right" : 0,
-			"delay" : 0.3
+			"right" : -0.5
 		}
 		print "5"
 
 	print motion
+	# bar = progressbar.ProgressBar(maxval=20, \
+	#     widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+	# bar.start()
+	# for i in xrange(20):
+	#     bar.update(i+1)
+	#     sleep(0.1)
+	# bar.finish()
 	MOTORS.move(motion["left"], motion["right"])
-	time.sleep(motion["delay"])
-	time.sleep(0.1)
+	time.sleep(0.05)
 	MOTORS.stop()
+	time.sleep(0.01)
 
+# MOTORS.move(1, 1)
+# time.sleep(1)
+# MOTORS.move(-1, -1)
+# time.sleep(1)
+# MOTORS.move(1, -1)
+# time.sleep(1)
 
 
 MOTORS.stop()
 MOTORS.cleanup()
+
