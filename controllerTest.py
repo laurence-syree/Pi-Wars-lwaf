@@ -3,7 +3,7 @@
 # pylint: disable = I0011, C0103, R0201, C0330, C0103
 import pygame
 import math
-import MotorLibrary
+import motorLibrary
 import os
 
 PINS = {
@@ -22,7 +22,7 @@ PWMS = {
     "r" : 16
 }
 
-MOTORS = MotorLibrary.Management(PINS, PWMS)
+MOTORS = motorLibrary.management(PINS, PWMS)
 MOTORS.stop()
 
 
@@ -89,15 +89,15 @@ while True:
                 backwardsDown = True
             if event.button == 5:
                 # R1
-                print "right"
+                print ("right")
                 MOTORS.move(1, -1)
             if event.button == 4:
                 # L1
-                print "left"
+                print ("left")
                 MOTORS.move(-1, 1)
             if event.button == 8:
                 # Share
-                print "Shut down"
+                print ("Shut down")
                 os.system("shutdown -h now")
         if event.type == pygame.JOYBUTTONUP:
             if event.button == 7:
