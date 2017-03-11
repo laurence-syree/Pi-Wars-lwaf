@@ -2,7 +2,7 @@
 # Next line is for the sublime pylinter plugin
 # pylint: disable = I0011, C0103, R0201, C0330, C0103
 import time, os
-import MotorLibrary, LineSenseLib
+import motorLibrary, lineFollower
 
 # System setup
 PINS = {
@@ -33,14 +33,14 @@ motion = {
 	"right" : 0.5
 }
 
-MOTORS = MotorLibrary.Management(PINS, PWMS)
+MOTORS = motorLibrary.management(PINS, PWMS)
 
 
 while True:
 	try:
-		left = LineSenseLib.checkSensor(linePins['l'])
-		center = LineSenseLib.checkSensor(linePins['c'])
-		right = LineSenseLib.checkSensor(linePins['r'])
+		left = lineFollower.checkSensor(linePins['l'])
+		center = lineFollower.checkSensor(linePins['c'])
+		right = lineFollower.checkSensor(linePins['r'])
 		waitingBool = False
 
 		if left and not center and not right:
@@ -76,17 +76,19 @@ while True:
 		else:
 			waitingBool = True
 
+		motorLeft, motorRight = MOTORS.move(motion["left"], motion["right"])
+		time.sleep(0.15)
+		MOTORS.stop()
+		time.sleep(0.01)
+
 		# Display Debug Information
 		os.system("clear")
-		print ("status: " + scriptStatus)
+		print ("status : " + scriptStatus)
 		for key, value in motion.items():
 			print (str(key) + " : " + str(value))
-		print ("waiting: " + str(waitingBool))
-
-		# MOTORS.move(motion["left"], motion["right"])
-		time.sleep(0.15)
-		# MOTORS.stop()
-		time.sleep(0.01)
+		print ("waiting : " + str(waitingBool))
+		print ("\nLeft Motor : " + str(motorLeft))
+		print ("Right Motor : " + str(motorRight))
 
 	except KeyboardInterrupt:
 		# Clean exiting for motor stopping
@@ -96,11 +98,13 @@ while True:
 		# Display Debug Information
 		os.system("clear")
 		print ("Keyboard interrupt detected, Last known status:")
-		print ("status: " + scriptStatus)
+		print ("status : " + scriptStatus)
 		for key, value in motion.items():
 			print (str(key) + " : " + str(value))
-		print ("waiting: " + str(waitingBool))
+		print ("waiting : " + str(waitingBool))
+		print ("\nLeft Motor : " + str(motorLeft))
+		print ("Right Motor : " + str(motorRight))
 		print ("Exiting")
 
 		# Quit program
-		exit()
+		exit(0)

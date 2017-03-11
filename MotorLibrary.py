@@ -7,24 +7,11 @@ import RPi.GPIO as GPIO
 SPEED = 0
 DIRECTION = 1
 
-# def normspeed(input_data):
-#     """ Normalises an input range value to the range required by the motors (direcitonally) """
-#     if input_data == 0:
-#         return 0, None
-#     back = False
-#     abs_input_data = abs(input_data)
-#     OldRange = (1 - 0)
-#     NewRange = (90 - 10)
-#     NewValue = (((abs_input_data - 0) * NewRange) / OldRange) + 10
-#     if input_data < 0:
-#         back = True
-#     return NewValue, back
-
 def normspeed(input_data):
     return (abs(input_data)*80) + 10, input_data < 0
 
 # Create a central class called managment
-class Management():
+class management():
     """ Class for motor control mangment (main class) """
     # When an instance of the managment class is created setup the motor mechanism
     def __init__(self, pins, pwmPins):
@@ -57,13 +44,10 @@ class Management():
         normLeft = normspeed(speedLeft)
         normRight = normspeed(speedRight)
 
-
         # Change the duty cycles on both motors according to what has been requested
         if normLeft[SPEED] != 0:
-            print (normLeft[SPEED])
             self.pwm1.ChangeDutyCycle(normLeft[SPEED])
         if normRight[SPEED] != 0:
-            print (normRight[SPEED])
             self.pwm2.ChangeDutyCycle(normRight[SPEED])
 
         # Itterate through each pin in the pinset dictionary
@@ -91,6 +75,7 @@ class Management():
                     elif not normRight[DIRECTION]:
                         if cur_key.endswith('b'):
                             GPIO.output(cur_pin, GPIO.HIGH)
+        return normLeft[SPEED], normRight[SPEED]
 
     def stop(self):
         """ Set all GPIO pins to low to kill any movement """
