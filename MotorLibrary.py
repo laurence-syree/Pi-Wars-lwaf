@@ -7,8 +7,6 @@ import RPi.GPIO as GPIO
 SPEED = 0
 DIRECTION = 1
 
-
-
 # def normspeed(input_data):
 #     """ Normalises an input range value to the range required by the motors (direcitonally) """
 #     if input_data == 0:
@@ -23,7 +21,7 @@ DIRECTION = 1
 #     return NewValue, back
 
 def normspeed(input_data):
-    return abs(input_data)*80 + 35, input_data < 0
+    return (abs(input_data)*80) + 10, input_data < 0
 
 # Create a central class called managment
 class Management():
@@ -62,10 +60,10 @@ class Management():
 
         # Change the duty cycles on both motors according to what has been requested
         if normLeft[SPEED] != 0:
-            print normLeft[SPEED]
+            print (normLeft[SPEED])
             self.pwm1.ChangeDutyCycle(normLeft[SPEED])
         if normRight[SPEED] != 0:
-            print normRight[SPEED]
+            print (normRight[SPEED])
             self.pwm2.ChangeDutyCycle(normRight[SPEED])
 
         # Itterate through each pin in the pinset dictionary
