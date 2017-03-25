@@ -9,6 +9,8 @@ print ("2")
 import motorLibrary
 print ("3")
 import lineFollower
+print ("4")
+from tabulate import tabulate
 print ("control, post import")
 
 # System setup
@@ -62,7 +64,6 @@ while True:
 		# center = True
 		# right = False
 
-		print (str(left) + str(center) + str(right) + "\n\n\n\n")
 		waitingBool = False
 
 		if left and not center and not right:
@@ -99,35 +100,57 @@ while True:
 			waitingBool = True
 
 		motorLeft, motorRight = MOTORS.move(motion["left"], motion["right"])
-		print("Run m")
 		time.sleep(0.07)
-		print("Post m")
 		MOTORS.stop()
 		time.sleep(0.07)
 
 		# Display Debug Information
-		#os.system("clear")
-		print ("status : " + scriptStatus)
-		for key, value in motion.items():
-			print (str(key) + " : " + str(value))
-		print ("waiting : " + str(waitingBool))
-		print ("\nLeft Motor : " + str(motorLeft))
-		print ("Right Motor : " + str(motorRight))
+		os.system("clear")
+		# print ("status : " + scriptStatus)
+		# for key, value in motion.items():
+		# 	print (str(key) + " : " + str(value))
+		# print ("waiting : " + str(waitingBool))
+		# print ("\nLeft Motor : " + str(motorLeft))
+		# print ("Right Motor : " + str(motorRight))
+		# print (str(left) + str(center) + str(right) + "\n\n\n\n")
+		print (tabulate([
+			["status", scriptStatus],
+			["waiting", str(waitingBool)],
+			["Left Motor Setting", str(motion.get("left"))],
+			["Right Motor Setting", str(motion.get("right"))],
+			["Motor Actions"],
+			["Left Motor", str(motorLeft)],
+			["Right Motor", str(motorRight)],
+			["Sensors"],
+			["Left Sensor", str(left)],
+			["Center Sensor", str(center)],
+			["Right Sensor", str(right)]
+
+			], tablefmt="fancy_grid"))
 
 	except KeyboardInterrupt:
 		# Clean exiting for motor stopping
 		MOTORS.stop()
 		MOTORS.cleanup()
 
+
 		# Display Debug Information
 		os.system("clear")
 		print ("Keyboard interrupt detected, Last known status:")
-		print ("status : " + scriptStatus)
-		for key, value in motion.items():
-			print (str(key) + " : " + str(value))
-		print ("waiting : " + str(waitingBool))
-		print ("\nLeft Motor : " + str(motorLeft))
-		print ("Right Motor : " + str(motorRight))
+		print (tabulate([
+			["status", scriptStatus],
+			["waiting", str(waitingBool)],
+			["Left Motor Setting", str(motion.get("left"))],
+			["Right Motor Setting", str(motion.get("right"))],
+			["Motor Actions"],
+			["Left Motor", str(motorLeft)],
+			["Right Motor", str(motorRight)],
+			["Sensors"],
+			["Left Sensor", str(left)],
+			["Center Sensor", str(center)],
+			["Right Sensor", str(right)]
+
+			], tablefmt="fancy_grid"))
 		print ("Exiting")
 
 		# Quit program

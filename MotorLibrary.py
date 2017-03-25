@@ -36,7 +36,7 @@ class management():
         # Create the pwm object with full speed frequency and duty cycle
         self.pwm2 = GPIO.PWM(pwmPins["l"], 50)
         self.pwm2.start(90)
-        print ("init compleate")
+        print ("init complete")
 
     def move(self, speedLeft, speedRight):
         self.stop()
@@ -60,12 +60,10 @@ class management():
                     if normLeft[DIRECTION]:
                         # If the pin currently in operation is a forwards pin enable
                         if cur_key.endswith('f'):
-                            print ("backwards l")
                             GPIO.output(cur_pin, GPIO.HIGH)
                     elif not normLeft[DIRECTION]:
                         # If the user has given a reverse command, enable the backwards pins
                         if cur_key.endswith('b'):
-                            print ("forwards l")
                             GPIO.output(cur_pin, GPIO.HIGH)
 
             if normRight[SPEED] != 0:
@@ -74,11 +72,9 @@ class management():
                     # Do the same for the right side of the robot
                     if normRight[DIRECTION]:
                         if cur_key.endswith('f'):
-                            print ("                 backwards r")
                             GPIO.output(cur_pin, GPIO.HIGH)
                     elif not normRight[DIRECTION]:
                         if cur_key.endswith('b'):
-                            print ("                 forwards r")
                             GPIO.output(cur_pin, GPIO.HIGH)
         return normLeft[SPEED], normRight[SPEED]
 
