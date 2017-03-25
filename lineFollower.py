@@ -6,12 +6,16 @@ import time
 print ("1")
 import os
 print ("2")
-import motorLibrary
+import RPi.GPIO as GPIO
 print ("3")
-import lineFollower
+import motorLibrary
 print ("4")
 from tabulate import tabulate
 print ("control, post import")
+
+def checkSensor(pin):
+	GPIO.setup(pin, GPIO.IN)
+	return not GPIO.input(pin)
 
 # System setup
 PINS_bk = {
@@ -57,9 +61,9 @@ MOTORS = motorLibrary.management(PINS, PWMS)
 
 while True:
 	try:
-		left = lineFollower.checkSensor(linePins['l'])
-		center = lineFollower.checkSensor(linePins['c'])
-		right = lineFollower.checkSensor(linePins['r'])
+		left = checkSensor(linePins['l'])
+		center = checkSensor(linePins['c'])
+		right = checkSensor(linePins['r'])
 		# left = False
 		# center = True
 		# right = False
@@ -155,3 +159,8 @@ while True:
 
 		# Quit program
 		exit(0)
+
+
+def checkSensor(pin):
+	GPIO.setup(pin, GPIO.IN)
+	return not GPIO.input(pin)
