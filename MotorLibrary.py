@@ -15,9 +15,9 @@ class management():
     """ Class for motor control mangment (main class) """
     # When an instance of the managment class is created setup the motor mechanism
     def __init__(self, pins, pwmPins):
+
         # Pull in the pins from the initialisation and store them within the class
         self.pinset = pins
-        self.pwnset = pwmPins
 
         # Set the GPIO output method for the script (currently: pin number based assignment)
         GPIO.setmode(GPIO.BOARD)
@@ -36,6 +36,7 @@ class management():
         # Create the pwm object with full speed frequency and duty cycle
         self.pwm2 = GPIO.PWM(pwmPins["l"], 50)
         self.pwm2.start(90)
+        print ("init compleate")
 
     def move(self, speedLeft, speedRight):
         self.stop()
@@ -45,9 +46,9 @@ class management():
         normRight = normspeed(speedRight)
 
         # Change the duty cycles on both motors according to what has been requested
-        if normLeft[SPEED] != 0:
-            self.pwm1.ChangeDutyCycle(normLeft[SPEED])
         if normRight[SPEED] != 0:
+            self.pwm1.ChangeDutyCycle(normLeft[SPEED])
+        if normLeft[SPEED] != 0:
             self.pwm2.ChangeDutyCycle(normRight[SPEED])
 
         # Itterate through each pin in the pinset dictionary
@@ -59,10 +60,12 @@ class management():
                     if normLeft[DIRECTION]:
                         # If the pin currently in operation is a forwards pin enable
                         if cur_key.endswith('f'):
+                            print ("backwards l")
                             GPIO.output(cur_pin, GPIO.HIGH)
                     elif not normLeft[DIRECTION]:
                         # If the user has given a reverse command, enable the backwards pins
                         if cur_key.endswith('b'):
+                            print ("forwards l")
                             GPIO.output(cur_pin, GPIO.HIGH)
 
             if normRight[SPEED] != 0:
@@ -71,9 +74,11 @@ class management():
                     # Do the same for the right side of the robot
                     if normRight[DIRECTION]:
                         if cur_key.endswith('f'):
+                            print ("                 backwards r")
                             GPIO.output(cur_pin, GPIO.HIGH)
                     elif not normRight[DIRECTION]:
                         if cur_key.endswith('b'):
+                            print ("                 forwards r")
                             GPIO.output(cur_pin, GPIO.HIGH)
         return normLeft[SPEED], normRight[SPEED]
 

@@ -24,14 +24,33 @@ try:
             if event.code in ecodes.ABS:
                 symbol = ecodes.ABS[event.code]
                 if symbol == "ABS_RY":
+                    pass
+                    #print(event.value)
+
+                if symbol == "ABS_X":
                     print(event.value)
 
+                if symbol == "ABS_RZ":
+                    print(event.value)
+
+                print(symbol)
+
         if event.type == ecodes.EV_KEY:
+
+            #print(event.code)
+
+            if event.code == 311:
+                pass
+                #print("right")
+
+            if event.code == 310:
+                print("left")
+
             if event.value == 1:
                 print("keydown")
             if event.value == 0:
-                print("keyup")
+                pass
+                #print("keyup")
 
-            print(event.code)
 except KeyboardInterrupt:
     sys.exit()
