@@ -25,11 +25,6 @@ PWMS = {
     "r" : 18
 }
 
-motion = {
-    "left" : 0.5,
-    "right" : 0.5
-}
-
 
 MOTORS = motorLibrary.management(PINS, PWMS)
 
@@ -67,11 +62,11 @@ def move(direction, magnitude):
     direction *= 1.9;
 
     if direction <= 0:
-        leftValue = magnitude
-        rightValue = magnitude - abs(direction)*magnitude
-    else:
         leftValue = magnitude - abs(direction)*magnitude
         rightValue = magnitude
+    else:
+        leftValue = magnitude
+        rightValue = magnitude - abs(direction)*magnitude
 
     leftValue = round(leftValue, 2)
     rightValue = round(rightValue, 2)
@@ -110,13 +105,13 @@ try:
 
                     if event.code == 308:
                         if event.value:
-                            MOTORS.move(-1, 1)
+                            MOTORS.move(1, -1)
                         else:
                             MOTORS.stop()
 
                     if event.code == 309:
                         if event.value:
-                            MOTORS.move(1, -1)
+                            MOTORS.move(-1, 1)
                         else:
                             MOTORS.stop()
 

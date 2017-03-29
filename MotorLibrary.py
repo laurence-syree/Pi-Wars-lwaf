@@ -84,5 +84,6 @@ class management():
             GPIO.output(cur_pin, GPIO.LOW)
 
     def cleanup(self):
+        self.stop()
         """ Clears all hold on GPIO pins, called when finished using this object """
         GPIO.cleanup()
