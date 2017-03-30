@@ -5,40 +5,41 @@
   # Echo: board number 7
 
 import RPi.GPIO as GPIO
-from time import sleep
-from time import time
+import time
 
 GPIO.setmode(GPIO.BOARD)
 
 def readSensor(Echo, Trigger):
-	while True:
-	  GPIO.setup(Triggers,GPIO.OUT)  # Set pin as output device
-	  GPIO.output(Triggers, 0)  # Output nothing??
+	GPIO.setup(Trigger,GPIO.OUT)  # Set pin as output device
+	GPIO.output(Trigger, 0)  # Output nothing??
 
-	  sleep(0.1)
+	time.sleep(0.1)
 
-	  print"Sending Trigger"
-	  # Send pulse, wait a fraction of a second and then stop sending
-	  GPIO.output(Triggers,1)  
-	  sleep(0.00001)
-	  GPIO.output(Triggers,0)
-	  
-	  GPIO.setup(Echo,GPIO.IN)  # Set pin to input device
+	print"Sending Trigger"
+	# Send pulse, wait a fraction of a second and then stop sending
+	GPIO.output(Trigger,1)  
+	time.sleep(0.00001)
+	GPIO.output(Trigger,0)
 
-	  while GPIO.input(Echo) == 0:  # While pin has no input, do nothing. Waiting for pulse to travel
-	    pass
-	  start = time()  # Once the loop is broken, start timing
+	GPIO.setup(Echo,GPIO.IN)  # Set pin to input device
 
-	  while GPIO.input(Echo) == 1:  # Wait for input to stop
-	    pass
-	  stop = time()  # stop timing
-	  # Calculate and output distance between US and object.
-	  elapsed = stop - start
-	  distance = elapsed * 17000
-	  print"Distance %.1f " % distance  # Output the distance travelled (in....?)
+	while GPIO.input(Echo) == 0:  # While pin has no input, do nothing. Waiting for pulse to travel
+		pass
+	start = time.time()  # Once the loop is broken, start timing
 
-	  sleep(2)  # Wait a second, rinse and repeat
+	while GPIO.input(Echo) == 1:  # Wait for input to stop
+		pass
+	stop = time.time()  # stop timing
+	# Calculate and output distance between US and object.
+	elapsed = stop - start
+	distance = elapsed * 17000
+	distance = round(distance, 2)
+	print "got distance"
+	return distance
  
-readSensor(7, 4)
+print (readSensor(7, 8))
+print (readSensor(5, 8))
+print (readSensor(3, 8))
+time.sleep(1)
 # Reset the GPIO
 GPIO.cleanup()
