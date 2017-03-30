@@ -11,7 +11,7 @@ GPIO.setmode(GPIO.BOARD)
 
 def readSensor(Echo, Trigger):
 	GPIO.setup(Trigger,GPIO.OUT)  # Set pin as output device
-	GPIO.output(Trigger, 0)  # Output nothing??
+	GPIO.output(Trigger, 0)  # Set the trigger to low (prevents issues on start)
 
 	time.sleep(0.1)
 
