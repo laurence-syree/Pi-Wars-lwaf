@@ -64,20 +64,10 @@ def move(direction, magnitude):
     if direction <= 0:
         leftValue = magnitude - abs(direction)*magnitude
         rightValue = magnitude
-        if leftValue <= 0.1:
-            leftvalue = leftValue * -1
-        if rightValue <= 0.1:
-            rightvalue = rightValue * -1
+
     else:
         leftValue = magnitude
         rightValue = magnitude - abs(direction)*magnitude
-
-        if leftValue <= 0.1:
-            print "1"
-            leftvalue = -0.01
-        if rightValue <= 0.1:
-            print "2"
-            rightvalue = -0.01
 
     leftValue = round(leftValue, 2)
     rightValue = round(rightValue, 2)
