@@ -25,7 +25,7 @@ PWMS = {
 # Create an instance of the motor library
 MOTORS = motorLibrary.management(PINS, PWMS)
 # Enable the motors at full power going forwards
-MOTORS.move(1, 1)
+MOTORS.move(0.87, 1)
 
 # Open a try statement which allows for clean exit upon Ctrl+C
 try:

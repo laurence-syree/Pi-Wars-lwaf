@@ -86,7 +86,8 @@ while True:
 		dire = "r"
 	
 	# Script decides when the robot is stuck and calls upon the memory and overwrites the sensor preference
-	if dire != "f" and int(left/10) == int(right/10):
+	# if dire != "f" and int(left/10) == int(right/10):
+	if dire != "f" and abs(left-right) <= 8 and left < 15:
 		print ("Stuckk")
 		if mem3:
 			dire = "l"
@@ -103,13 +104,13 @@ while True:
 	elif dire == "l":  
 		# Left
 		MOTORS.move(1, -1)
-		time.sleep(0.25)
+		time.sleep(0.15)
 		MOTORS.stop()
 
 	else:
 		# Right
 		MOTORS.move(-1, 1)
-		time.sleep(0.25)
+		time.sleep(0.15)
 		MOTORS.stop()
 
 	# Shuffle the mory over by one

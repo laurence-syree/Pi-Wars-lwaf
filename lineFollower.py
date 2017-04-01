@@ -109,6 +109,9 @@ while True:
 		MOTORS.stop()
 		time.sleep(0.07)
 
+		with open("log.txt", "a") as file1:
+			file1.write(str(left) + str(center) + str(right) + "\n")
+
 		# Display Debug Information using the tabulate library
 		os.system("clear")
 		print (tabulate([
