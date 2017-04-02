@@ -2,7 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 # Import the motor library for motor control
-import motorLibrary
+import MotorLibrary
 
 # Set the GPIO numbering type to BOARD
 GPIO.setmode(GPIO.BOARD)
@@ -26,7 +26,7 @@ PWMS = {
 }
 
 # Create an instance of the motor library and stop the motors
-MOTORS = motorLibrary.management(PINS, PWMS)
+MOTORS = MotorLibrary.management(PINS, PWMS)
 MOTORS.stop()
 
 

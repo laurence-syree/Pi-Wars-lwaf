@@ -2,7 +2,7 @@
 import time
 import os
 # Import the motor library file which allows control of the motors
-import motorLibrary
+import MotorLibrary
 
 # Define the pins which will be used to drive the motors
 PINS = {
@@ -23,7 +23,7 @@ PWMS = {
 }
 
 # Create an instance of the motor library
-MOTORS = motorLibrary.management(PINS, PWMS)
+MOTORS = MotorLibrary.management(PINS, PWMS)
 # Enable the motors at full power going forwards
 MOTORS.move(0.87, 1)
 

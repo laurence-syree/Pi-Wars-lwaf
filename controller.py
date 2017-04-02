@@ -2,7 +2,7 @@
 # Next line is for the sublime pylinter plugin
 # pylint: disable = I0011, C0103, R0201, C0330, C0103
 import math
-import motorLibrary
+import MotorLibrary
 import os
 import time
 from evdev import InputDevice, list_devices, categorize, ecodes, RelEvent
@@ -26,7 +26,7 @@ PWMS = {
 }
 
 
-MOTORS = motorLibrary.management(PINS, PWMS)
+MOTORS = MotorLibrary.management(PINS, PWMS)
 
 def clamp(my_value, min_value, max_value):
     return max(min(my_value, max_value), min_value)

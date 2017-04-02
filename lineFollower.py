@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 # Tabulate library is for creating the neat output tables
 from tabulate import tabulate
 # Import the motor library to power the motors
-import motorLibrary
+import MotorLibrary
 
 # Small function to check the values from the line following sensors
 def checkSensor(pin):
@@ -47,7 +47,7 @@ motion = {
 }
 
 # Create an instanct of the motor library
-MOTORS = motorLibrary.management(PINS, PWMS)
+MOTORS = MotorLibrary.management(PINS, PWMS)
 
 # Start a constant loop to keep the robot moving
 while True:
